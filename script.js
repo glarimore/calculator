@@ -22,6 +22,8 @@ let operation;
 //A variable for storing the temp total
 let tempTotal="0";
 
+
+//A function for debugging which outputs the status of all variables we care about
 const status = () => {
   console.log(tempTotal);
   console.log(operation);
@@ -32,6 +34,9 @@ const status = () => {
 //A function to update the display
 const updateScreen = (newScreen) => {
   newScreen = newScreen.toString();
+
+  if (newScreen.length > 13) newScreen = newScreen.substring(0, 13);
+
   const screen = document.querySelector('#screen > p');
   screen.textContent=newScreen;
 }
