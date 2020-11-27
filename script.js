@@ -52,6 +52,7 @@ numbers.forEach((button) => {
   button.addEventListener('click', () => {
     if (input == "0") input = "";
     if (input == tempTotal) input = "";
+    if (button.id == "." && input.indexOf(".") !== -1) return;
     input = input + button.id;
     updateScreen(input);
   })
@@ -68,6 +69,12 @@ const initialState = (operator) => {
 
 //a function for executing an operation and setting operator value
 const executeOperate = (operator) => {
+  //handle dividing by zero
+  if (operation == divide && input == 0) {
+    reset();
+    updateScreen("Math is hard");
+  }
+
   input = operate(operation, tempTotal, input);
   tempTotal = input;
   //set operator and tempTotal depending on whether an operation was supplied;
@@ -78,6 +85,13 @@ const executeOperate = (operator) => {
     tempTotal = "0";
    } 
   updateScreen(input);
+}
+
+//a function for clearing the calculator's stored values
+const reset = () => {
+  input = "0";
+  operation = undefined;
+  tempTotal="0";
 }
 
 
@@ -127,9 +141,7 @@ equalsButton.addEventListener('click', () => {
 //make the AC button do things
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', () => {
-  input = "0";
-  operation = undefined;
-  tempTotal="0";
+  reset();
   updateScreen(input);
 })
 
